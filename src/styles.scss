@@ -10,3 +10,11 @@ body {
     font-family: Roboto, "Helvetica Neue", sans-serif;
     overflow: hidden;
 }
+
+/*--------------   Forms   --------------*/
+
+.mat-form-field.hidden-error {
+    .mat-form-field-wrapper {
+        padding-bottom: 0;
+    }
+}
