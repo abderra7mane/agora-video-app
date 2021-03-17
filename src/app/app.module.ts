@@ -8,11 +8,12 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonModule } from '@angular/material/button';
+import { NgxAgoraSdkNgModule } from 'ngx-agora-sdk-ng';
 
 import AppRoutes from './app.routes';
 import { AppComponent } from './app.component';
 import { JoinRoomComponent } from '@app/components';
-import AppRoutes from './app.routes';
+import { AGORA_APP_ID } from '@app/shared';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,14 @@ import AppRoutes from './app.routes';
     MatInputModule,
     MatCheckboxModule,
     MatButtonModule,
+    NgxAgoraSdkNgModule.forRoot({
+      AppID: AGORA_APP_ID,
+      Video: {
+        codec: 'h264',
+        mode: 'rtc',
+        role: 'host'
+      },
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]
