@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { CallService } from '@app/services';
 import { User } from '@app/shared';
@@ -19,6 +19,7 @@ export class RoomComponent implements OnInit {
   private subscriptions: Subscription[] = [];
 
   constructor(
+    private router: Router,
     private activatedRoute: ActivatedRoute,
     private callService: CallService
   ) { }
@@ -43,6 +44,19 @@ export class RoomComponent implements OnInit {
     });
 
     this.callService.leaveChannel();
+  }
+
+  toggleMicrophone(status: boolean) {
+    this.callService.setMicStatus(status);
+  }
+
+  toggleCamera(status: boolean) {
+    this.callService.setCameraStatus(status);
+  }
+
+  leave() {
+    this.callService.leaveChannel();
+    this.router.navigate(['/'], { replaceUrl: true });
   }
 
 }

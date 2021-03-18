@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CallService } from '@app/services';
 
 @Component({
@@ -8,16 +8,24 @@ import { CallService } from '@app/services';
 })
 export class RoomControlsComponent implements OnInit {
 
-  constructor(private callService: CallService) { }
+  @Output() micStatusChange = new EventEmitter<boolean>();
+
+  @Output() cameraStatusChange = new EventEmitter<boolean>();
+
+  @Output() leaveChannel = new EventEmitter();
 
   ngOnInit(): void {}
 
   toggleMicrophone(status: boolean) {
-    this.callService.setMicStatus(status);
+    this.micStatusChange.emit(status);
   }
 
   toggleCamera(status: boolean) {
-    this.callService.setCameraStatus(status);
+    this.cameraStatusChange.emit(status);
+  }
+
+  leave() {
+    this.leaveChannel.emit();
   }
 
 }

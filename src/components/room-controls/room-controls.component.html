@@ -2,14 +2,27 @@
     <div class="control-group">
         <app-room-control-toggle
             activeIcon="mic"
+            activeLabel="Mute"
             inactiveIcon="mic_off"
+            inactiveLabel="Unmute"
             (changed)="toggleMicrophone($event)">
         </app-room-control-toggle>
 
         <app-room-control-toggle 
             activeIcon="videocam" 
+            activeLabel="Stop Video"
             inactiveIcon="videocam_off"
+            inactiveLabel="Start Video"
             (changed)="toggleCamera($event)">
         </app-room-control-toggle>
+    </div>
+
+    <div class="control-group">
+    </div>
+
+    <div class="control-group">
+        <button mat-flat-button color="warn" (click)="leave()">
+            Leave
+        </button>
     </div>
 </div>

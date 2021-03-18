@@ -21,6 +21,7 @@
       "dom"
     ],
     "paths": {
+      "@app/pages": ["src/pages"],
       "@app/components": ["src/components"],
       "@app/services": ["src/services"],
       "@app/shared": ["src/shared"]

@@ -11,5 +11,9 @@
         </div>
     </div>
 
-    <app-room-controls></app-room-controls>
+    <app-room-controls
+        (micStatusChange)="toggleMicrophone($event)"
+        (cameraStatusChange)="toggleCamera($event)"
+        (leaveChannel)="leave()">
+    </app-room-controls>
 </div>

@@ -8,7 +8,10 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 export class RoomControlToggleComponent implements OnInit {
 
   @Input() activeIcon: string;
+  @Input() activeLabel: string;
+  
   @Input() inactiveIcon: string;
+  @Input() inactiveLabel: string;
 
   @Input() isActive = true;
 
