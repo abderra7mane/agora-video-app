@@ -17,7 +17,8 @@ import { JoinRoomComponent, RoomComponent } from '@app/pages';
 import { 
   UserMediaPreviewComponent, 
   RoomControlsComponent, 
-  RoomControlToggleComponent 
+  RoomControlToggleComponent,
+  CameraPreviewComponent
 } from '@app/components';
 import { AGORA_APP_ID } from '@app/shared';
 
@@ -28,7 +29,8 @@ import { AGORA_APP_ID } from '@app/shared';
     RoomComponent,
     UserMediaPreviewComponent,
     RoomControlsComponent,
-    RoomControlToggleComponent
+    RoomControlToggleComponent,
+    CameraPreviewComponent
   ],
   imports: [
     BrowserModule,
