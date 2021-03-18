@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { take } from 'rxjs/operators';
 import { CallService } from '@app/services';
 import { User } from '@app/shared';
 
@@ -27,16 +26,12 @@ export class RoomComponent implements OnInit {
   ngOnInit(): void {
     const paramsSubs = this.activatedRoute.params.subscribe((params) => {
       this.callService.joinChannel(params.id).then(() => {
-        this.callService.userMediaTrack
-          .pipe(take(1))
-          .subscribe((mediaTrack) => {
-            this.localUser = {
-              type: 'local',
-              uid: this.callService.userId,
-              displayName: this.callService.displayName || 'Me',
-              mediaTrack: mediaTrack
-            };
-          });
+        this.localUser = {
+          type: 'local',
+          uid: this.callService.userId,
+          displayName: this.callService.displayName || 'Me',
+          mediaTrack: this.callService.userMediaTrack
+        };
       });
     });
     this.subscriptions.push(paramsSubs);

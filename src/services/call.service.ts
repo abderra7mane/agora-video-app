@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { IMediaTrack, IRemoteUser, NgxAgoraSdkNgService } from 'ngx-agora-sdk-ng';
-import { BehaviorSubject, Subscription } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { AGORA_APP_TOKEN, User, uuid } from '@app/shared';
 
 @Injectable({
@@ -12,8 +12,8 @@ export class CallService {
 
   displayName: string;
 
-  private _userMediaTrackSubject = new BehaviorSubject<IMediaTrack>(null);
-  userMediaTrack = this._userMediaTrackSubject.asObservable();
+  private _userMediaTrack: IMediaTrack;
+  get userMediaTrack() { return this._userMediaTrack; }
 
   private _remoteUsers: User[] = [];
   get remoteUsers() { return this._remoteUsers };
@@ -29,18 +29,23 @@ export class CallService {
    * @returns a Promise that resolves to the local user media track.
    */
   joinChannel(channel: string) {
+    this.setupLocalUserStatusListener();
+    this.setupRemoteUsersStatusListeners();
+
     return this.agoraService.join(channel, AGORA_APP_TOKEN, this.userId)
-      .WithCameraAndMicrophone(null, null)
-      .Apply()
-      .then(this.handleLocalUserMediaTrack.bind(this))
-      .then(this.setupRemoteUsersListeners.bind(this));
+      .WithCameraAndMicrophone('', '')
+      .Apply();
   }
 
-  private handleLocalUserMediaTrack(track: IMediaTrack) {
-    this._userMediaTrackSubject.next(track);
+  private setupLocalUserStatusListener() {
+    const localUserJoinedSubs = this.agoraService.onLocalUserJoined()
+      .subscribe(({ track }) => {
+        this._userMediaTrack = track;
+      });
+    this.susbscriptions.push(localUserJoinedSubs);
   }
 
-  private setupRemoteUsersListeners() {
+  private setupRemoteUsersStatusListeners() {
     const userLeftSubs = this.agoraService.onRemoteUserLeft()
       .subscribe((remoteUser) => {
         this.removeUser(remoteUser.user);
@@ -95,8 +100,18 @@ export class CallService {
    */
   leaveChannel() {
     this.agoraService.leave();
-    this._userMediaTrackSubject.value?.stop();
+    this.userMediaTrack?.stop();
     this.remoteUsers.splice(0, this.remoteUsers.length);
+  }
+
+  setCameraStatus(status: boolean) {
+    status ? this.userMediaTrack?.cameraOn() 
+      : this.userMediaTrack?.cameraOff();
+  }
+
+  setMicStatus(status: boolean) {
+    status ? this.userMediaTrack?.microphoneUnMute()
+      : this.userMediaTrack?.microphoneMute();
   }
 
 }

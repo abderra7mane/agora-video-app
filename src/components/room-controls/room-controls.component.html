@@ -1,0 +1,15 @@
+<div class="control-panel">
+    <div class="control-group">
+        <app-room-control-toggle
+            activeIcon="mic"
+            inactiveIcon="mic_off"
+            (changed)="toggleMicrophone($event)">
+        </app-room-control-toggle>
+
+        <app-room-control-toggle 
+            activeIcon="videocam" 
+            inactiveIcon="videocam_off"
+            (changed)="toggleCamera($event)">
+        </app-room-control-toggle>
+    </div>
+</div>
