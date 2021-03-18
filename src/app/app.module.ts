@@ -8,6 +8,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 import { NgxAgoraSdkNgModule } from 'ngx-agora-sdk-ng';
 
 import AppRoutes from './app.routes';
@@ -30,6 +31,7 @@ import { AGORA_APP_ID } from '@app/shared';
     MatInputModule,
     MatCheckboxModule,
     MatButtonModule,
+    MatIconModule,
     NgxAgoraSdkNgModule.forRoot({
       AppID: AGORA_APP_ID,
       Video: {
