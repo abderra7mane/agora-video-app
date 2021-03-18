@@ -1,0 +1,13 @@
+<div class="content-wrapper">
+    <div class="content">
+        <div class="media-previews-wrapper">
+            <ng-container *ngIf="localUser">
+                <app-user-media-preview [user]="localUser"></app-user-media-preview>
+            </ng-container>
+
+            <ng-container *ngFor="let user of remoteUsers">
+                <app-user-media-preview [user]="user"></app-user-media-preview>
+            </ng-container>
+        </div>
+    </div>
+</div>

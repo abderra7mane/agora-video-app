@@ -13,13 +13,15 @@ import { NgxAgoraSdkNgModule } from 'ngx-agora-sdk-ng';
 
 import AppRoutes from './app.routes';
 import { AppComponent } from './app.component';
-import { JoinRoomComponent } from '@app/components';
+import { JoinRoomComponent, RoomComponent, UserMediaPreviewComponent } from '@app/components';
 import { AGORA_APP_ID } from '@app/shared';
 
 @NgModule({
   declarations: [
     AppComponent,
     JoinRoomComponent,
+    RoomComponent,
+    UserMediaPreviewComponent
   ],
   imports: [
     BrowserModule,

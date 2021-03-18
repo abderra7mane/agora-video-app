@@ -3,7 +3,6 @@ import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { CallService, MediaService } from '@app/services';
-import { uuid } from '@app/shared';
 
 @Component({
   selector: 'app-join-room',
@@ -42,8 +41,6 @@ export class JoinRoomComponent implements OnInit {
       return;
 
     const { roomId, displayName } = form.value;
-
-    this.callService.userId = uuid();
     this.callService.displayName = displayName;
 
     this.router.navigate(['/room', roomId]);
