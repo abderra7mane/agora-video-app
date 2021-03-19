@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Clipboard } from '@angular/cdk/clipboard';
 import { forkJoin, Subscription } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { AgoraService, User } from '@app/services';
+import { SHARE_LINK_MESSAGE } from '@app/shared';
 
 @Component({
   selector: 'app-room',
@@ -13,11 +16,15 @@ export class RoomComponent implements OnInit {
 
   usersList: User[] = [];
 
+  private roomId: string;
+
   private subscriptions: Subscription[] = [];
 
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
+    private snackBar: MatSnackBar,
+    private clipboard: Clipboard,
     private agoraService: AgoraService
   ) { }
 
@@ -32,8 +39,10 @@ export class RoomComponent implements OnInit {
       });
 
       // join a call:  join(channel, mode, name)
-      await this.agoraService.joinChannel(params.id, 
-        queryParams.mode, queryParams.user);
+      const { id, mode, user } = params;
+      await this.agoraService.joinChannel(id, mode, user);
+      
+      this.roomId = id;
 
       // receive other participants: 
       //    remoteUserJoined
@@ -86,6 +95,15 @@ export class RoomComponent implements OnInit {
     this.agoraService.leaveChannel();
     this.usersList.splice(0, this.usersList.length);
     this.router.navigate(['/'], { replaceUrl: true });
+  }
+
+  shareRoomLink() {
+    const link = `${location.origin}/join?room=${this.roomId}`;
+    this.clipboard.copy(link);
+
+    this.snackBar.open(SHARE_LINK_MESSAGE, null, { 
+      duration: 3000, panelClass: 'room-snackbar'
+    });
   }
 
 }

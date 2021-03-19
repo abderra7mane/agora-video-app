@@ -28,6 +28,12 @@
             [isActive]="false"
             (changed)="toggleScreenSharing($event)">
         </app-room-control-toggle>
+
+        <app-room-control-button
+            icon="offline_share"
+            label="Share Link"
+            (clicked)="shareLink()">
+        </app-room-control-button>
     </div>
 
     <div class="control-group">

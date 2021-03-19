@@ -15,6 +15,8 @@ export class RoomControlsComponent implements OnInit {
 
   @Output() leaveChannel = new EventEmitter();
 
+  @Output() shareRoomLink = new EventEmitter();
+
   ngOnInit(): void {}
 
   toggleMicrophone(status: boolean) {
@@ -31,6 +33,10 @@ export class RoomControlsComponent implements OnInit {
 
   leave() {
     this.leaveChannel.emit();
+  }
+
+  shareLink() {
+    this.shareRoomLink.emit();
   }
 
 }

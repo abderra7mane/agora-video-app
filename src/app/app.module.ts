@@ -10,6 +10,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { ClipboardModule } from '@angular/cdk/clipboard';
 
 import AppRoutes from './app.routes';
 import { AppComponent } from './app.component';
@@ -18,7 +20,8 @@ import {
   UserMediaPreviewComponent, 
   RoomControlsComponent, 
   RoomControlToggleComponent,
-  CameraPreviewComponent
+  CameraPreviewComponent,
+  RoomControlButtonComponent
 } from '@app/components';
 
 @NgModule({
@@ -29,7 +32,8 @@ import {
     UserMediaPreviewComponent,
     RoomControlsComponent,
     RoomControlToggleComponent,
-    CameraPreviewComponent
+    CameraPreviewComponent,
+    RoomControlButtonComponent
   ],
   imports: [
     BrowserModule,
@@ -42,7 +46,9 @@ import {
     MatInputModule,
     MatCheckboxModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
+    MatSnackBarModule,
+    ClipboardModule
   ],
   providers: [],
   bootstrap: [AppComponent]

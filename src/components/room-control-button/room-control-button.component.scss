@@ -1,0 +1,22 @@
+.control-button {
+    color: #d8d9dd;
+    background: transparent;
+    padding: 4px;
+    min-width: 64px;
+    height: 48px;
+    margin: 0px 2px;
+    border-radius: 0;
+
+    .icon {
+        display: block;
+        margin: auto;
+        margin-bottom: 3px;
+        font-size: 20px;
+        line-height: 24px;
+    }
+
+    .label {
+        font-size: 11px;
+        line-height: 12px;
+    }
+}
