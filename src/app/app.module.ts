@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatCardModule } from '@angular/material/card';
@@ -19,7 +20,6 @@ import {
   RoomControlToggleComponent,
   CameraPreviewComponent
 } from '@app/components';
-import { AGORA_APP_ID } from '@app/shared';
 
 @NgModule({
   declarations: [
@@ -36,6 +36,7 @@ import { AGORA_APP_ID } from '@app/shared';
     FormsModule,
     RouterModule.forRoot(AppRoutes),
     BrowserAnimationsModule,
+    HttpClientModule,
     MatCardModule,
     MatFormFieldModule,
     MatInputModule,

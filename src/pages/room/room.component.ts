@@ -21,7 +21,7 @@ export class RoomComponent implements OnInit {
     private agoraService: AgoraService
   ) { }
 
-  async ngOnInit() {
+  ngOnInit() {
     forkJoin([
       this.activatedRoute.params.pipe(take(1)),
       this.activatedRoute.queryParams.pipe(take(1))
