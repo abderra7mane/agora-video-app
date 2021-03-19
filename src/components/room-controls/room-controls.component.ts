@@ -11,6 +11,8 @@ export class RoomControlsComponent implements OnInit {
 
   @Output() cameraStatusChange = new EventEmitter<boolean>();
 
+  @Output() shareScreenStatusChange = new EventEmitter<boolean>();
+
   @Output() leaveChannel = new EventEmitter();
 
   ngOnInit(): void {}
@@ -21,6 +23,10 @@ export class RoomControlsComponent implements OnInit {
 
   toggleCamera(status: boolean) {
     this.cameraStatusChange.emit(status);
+  }
+
+  toggleScreenSharing(status: boolean) {
+    this.shareScreenStatusChange.emit(status);
   }
 
   leave() {

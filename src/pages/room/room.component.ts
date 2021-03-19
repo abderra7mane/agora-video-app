@@ -77,6 +77,11 @@ export class RoomComponent implements OnInit {
       : this.agoraService.cameraOff();
   }
 
+  toggleScreenSharing(status: boolean) {
+    status ? this.agoraService.shareScreen()
+      : this.agoraService.stopScreenSharing();
+  }
+
   leave() {
     this.agoraService.leaveChannel();
     this.usersList.splice(0, this.usersList.length);

@@ -1,10 +1,17 @@
-<div class="user-media-preview" *ngIf="!user.isSpectator">
-    <div class="video-wrapper" #videoWrapper>
-        <div class="video-overlay"></div>
-    </div>
-    <div class="user-details">
-        <div class="display-name">
-            {{user.displayName}}
+<ng-container *ngIf="!user.isSpectator">
+    <div class="user-media-preview" [ngClass]="{'full-page': fullPage}">
+        <div class="video-wrapper" #videoWrapper>
+            <div class="video-overlay"></div>
+            <div class="video-controls">
+                <button mat-flat-button [disableRipple]="true" (click)="fullPage = !fullPage">
+                    <mat-icon>{{fullPage ? 'close_fullscreen' : 'zoom_out_map'}}</mat-icon>
+                </button>
+            </div>
+        </div>
+        <div class="user-details">
+            <div class="display-name">
+                {{user.displayName}}
+            </div>
         </div>
     </div>
-</div>
+</ng-container>

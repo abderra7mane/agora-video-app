@@ -10,6 +10,7 @@
     <app-room-controls
         (micStatusChange)="toggleMicrophone($event)"
         (cameraStatusChange)="toggleCamera($event)"
+        (shareScreenStatusChange)="toggleScreenSharing($event)"
         (leaveChannel)="leave()">
     </app-room-controls>
 </div>

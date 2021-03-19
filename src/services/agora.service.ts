@@ -27,6 +27,7 @@ export class AgoraService {
 
     private audioTrack: ILocalAudioTrack;
     private videoTrack: ILocalVideoTrack;
+    private screenTrack: ILocalVideoTrack;
 
     private localUserJoinedEvent = new EventEmitter<User>();
     localUserJoined = this.localUserJoinedEvent.asObservable();
@@ -221,6 +222,38 @@ export class AgoraService {
             throw new Error('Cannot change microphone status in spectator mode');
 
         this.audioTrack.setEnabled(status);
+    }
+
+    async shareScreen() {
+        if (!this.isConnected())
+            throw new Error('Client is not connected');
+
+        if (this.isSpectator())
+            throw new Error('Cannot share screen in spectator mode');
+
+        this.screenTrack = await AgoraRTC.createScreenVideoTrack({}, "disable");
+        this.screenTrack.on('track-ended', async () => {
+            await this.client.unpublish(this.screenTrack);
+            await this.client.publish(this.videoTrack);
+    
+            this.screenTrack.close();
+        });
+        
+        await this.client.unpublish(this.videoTrack);
+        await this.client.publish(this.screenTrack);
+    }
+
+    async stopScreenSharing() {
+        if (!this.isConnected())
+            throw new Error('Client is not connected');
+
+        if (this.isSpectator())
+            throw new Error('Cannot share screen in spectator mode');
+
+        await this.client.unpublish(this.screenTrack);
+        await this.client.publish(this.videoTrack);
+
+        this.screenTrack.close();
     }
 
     async leaveChannel() {

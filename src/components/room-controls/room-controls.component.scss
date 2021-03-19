@@ -10,4 +10,20 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+
+    .control-group {
+        flex: 1;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+
+        &:first-child {
+            justify-content: flex-start;
+        }
+
+        &:last-child {
+            justify-content: flex-end;
+        }
+    }
 }

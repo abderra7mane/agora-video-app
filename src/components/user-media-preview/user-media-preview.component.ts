@@ -12,6 +12,8 @@ export class UserMediaPreviewComponent implements OnInit {
 
   @ViewChild('videoWrapper') videoWrapper: ElementRef<HTMLElement>;
 
+  fullPage = false;
+
   ngOnInit() {}
 
   ngAfterViewInit() {
