@@ -1,6 +1,19 @@
 {
   "name": "agora-video-app",
-  "version": "0.0.0",
+  "description": "A video chat app built using Agora SDK",
+  "version": "1.0.0",
+  "keywords": ["Agora SDK", "Video Chat", "Angular"],
+  "author": {
+    "name": "Abderrahmane Mokrani",
+    "email": "m.abderra7mane@gmail.com",
+    "url": "https://abderra7mane.com"
+  },
+  "homepage": "https://agora-video-app.vercel.app/",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/abderra7mane/agora-video-app.git"
+  },
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -9,7 +22,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e"
   },
-  "private": true,
+  "public": true,
   "dependencies": {
     "@angular/animations": "~11.2.5",
     "@angular/cdk": "^11.2.4",
