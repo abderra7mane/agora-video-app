@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { CallService } from '@app/services';
 
 @Component({
   selector: 'app-room-controls',

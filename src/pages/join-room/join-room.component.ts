@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
-import { CallService, MediaService } from '@app/services';
+import { UserJoinMode } from '@app/services';
 
 @Component({
   selector: 'app-join-room',
@@ -10,11 +10,7 @@ import { CallService, MediaService } from '@app/services';
 })
 export class JoinRoomComponent implements OnInit {
 
-  constructor(
-    private router: Router, 
-    private callService: CallService,
-    private mediaService: MediaService
-  ) { }
+  constructor(private router: Router) { }
 
   ngOnInit() {}
 
@@ -22,10 +18,15 @@ export class JoinRoomComponent implements OnInit {
     if (form.invalid)
       return;
 
-    const { roomId, displayName } = form.value;
-    this.callService.displayName = displayName;
+    const { roomId, displayName, asSpectator } = form.value;
+    const joinMode: UserJoinMode = asSpectator ? 'spectator' : 'participant';
 
-    this.router.navigate(['/room', roomId]);
+    this.router.navigate(['/room', roomId], { 
+      queryParams: {
+        user: displayName,
+        mode: joinMode
+      }
+    });
   }
 
 }

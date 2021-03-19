@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
-import { CallService } from '@app/services';
-import { User } from '@app/shared';
-
+import { forkJoin, Subscription } from 'rxjs';
+import { take } from 'rxjs/operators';
+import { AgoraService, User } from '@app/services';
 
 @Component({
   selector: 'app-room',
@@ -12,30 +11,52 @@ import { User } from '@app/shared';
 })
 export class RoomComponent implements OnInit {
 
-  localUser: User;
-
-  get remoteUsers() { return this.callService.remoteUsers; }
+  usersList: User[] = [];
 
   private subscriptions: Subscription[] = [];
 
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private callService: CallService
+    private agoraService: AgoraService
   ) { }
 
-  ngOnInit(): void {
-    const paramsSubs = this.activatedRoute.params.subscribe((params) => {
-      this.callService.joinChannel(params.id).then(() => {
-        this.localUser = {
-          type: 'local',
-          uid: this.callService.userId,
-          displayName: this.callService.displayName || 'Me',
-          mediaTrack: this.callService.userMediaTrack
-        };
+  async ngOnInit() {
+    forkJoin([
+      this.activatedRoute.params.pipe(take(1)),
+      this.activatedRoute.queryParams.pipe(take(1))
+    ]).subscribe(async ([params, queryParams]) => {
+      // get local stream : localUserJoined.subscribe()
+      this.agoraService.localUserJoined.subscribe(( user ) => {
+        this.usersList.push(user);
+      });
+
+      // join a call:  join(channel, mode, name)
+      await this.agoraService.joinChannel(params.id, 
+        queryParams.mode, queryParams.user);
+
+      // receive other participants: 
+      //    remoteUserJoined
+      this.agoraService.remoteUserJoined.subscribe((remoteUser) => {
+        this.usersList.push(remoteUser as any);
+      });
+      //    remoteUserLeft
+      this.agoraService.remoteUserLeft.subscribe((remoteUser) => {
+        const userIndex = this.usersList.findIndex(u => u.uid === remoteUser.uid);
+
+        if (userIndex >= 0)
+          this.usersList.splice(userIndex, 1);
+      });
+      //    remoteUserStatusChanged
+      this.agoraService.remoteUserStatusChanged.subscribe((remoteUser) => {
+        const userIndex = this.usersList.findIndex(u => u.uid === remoteUser.uid);
+  
+        if (userIndex >= 0)
+          this.usersList[userIndex] = remoteUser as any;
+        else
+          this.usersList.push(remoteUser as any);
       });
     });
-    this.subscriptions.push(paramsSubs);
   }
 
   ngOnDestroy() {
@@ -43,19 +64,22 @@ export class RoomComponent implements OnInit {
       subs.unsubscribe();
     });
 
-    this.callService.leaveChannel();
+    this.leave();
   }
 
   toggleMicrophone(status: boolean) {
-    this.callService.setMicStatus(status);
+    status ? this.agoraService.unmuteMicrophone() 
+      : this.agoraService.muteMicrophone();
   }
 
   toggleCamera(status: boolean) {
-    this.callService.setCameraStatus(status);
+    status ? this.agoraService.cameraOn() 
+      : this.agoraService.cameraOff();
   }
 
   leave() {
-    this.callService.leaveChannel();
+    this.agoraService.leaveChannel();
+    this.usersList.splice(0, this.usersList.length);
     this.router.navigate(['/'], { replaceUrl: true });
   }
 
