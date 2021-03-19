@@ -4,7 +4,6 @@ import AgoraRTC, {
     ILocalVideoTrack, IRemoteAudioTrack, IRemoteVideoTrack, SDK_CODEC, SDK_MODE, UID 
 } from 'agora-rtc-sdk-ng';
 import { AGORA_APP_ID, uuid } from "@app/shared";
-import { TokenService } from "./token.service";
 
 export class User {
     type: 'local' | 'remote';
@@ -42,7 +41,7 @@ export class AgoraService {
     private remoteUserStatusChangedEvent = new EventEmitter<User>();
     remoteUserStatusChanged = this.remoteUserStatusChangedEvent.asObservable();
 
-    constructor(private tokenService: TokenService) {
+    constructor() {
         // 2: Warning
         AgoraRTC.setLogLevel(2);
     }
@@ -58,12 +57,9 @@ export class AgoraService {
         this.client = this.createClient(mode);
         this.mode = mode;
 
-        // 2. get a new token
-        const uid = uuid();
-        const token = await this.tokenService.getToken(channel, uid).toPromise();
-        
         // 2. join channel
-        await this.client.join(AGORA_APP_ID, channel, token, uid);
+        const uid = uuid();
+        await this.client.join(AGORA_APP_ID, channel, null, uid);
         
         // 3. build and publish tracks
         if (!this.isSpectator()) {
