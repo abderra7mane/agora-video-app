@@ -39,7 +39,8 @@ export class RoomComponent implements OnInit {
       });
 
       // join a call:  join(channel, mode, name)
-      const { id, mode, user } = params;
+      const { id } = params;
+      const { user, mode } = queryParams;
       await this.agoraService.joinChannel(id, mode, user);
       
       this.roomId = id;
