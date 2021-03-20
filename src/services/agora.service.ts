@@ -46,6 +46,16 @@ export class AgoraService {
         AgoraRTC.setLogLevel(2);
     }
 
+    /**
+     * Join the channel specified by the given parameter.
+     * if `mode` is set to 'participant' (default), user feed from camera/microphone
+     * is shared with the rest of the users, otherwise - as a 'spectator' - the user 
+     * feed in not shared.
+     * 
+     * @param channel The channel name
+     * @param mode Joining mode: 'participant' (default) or 'spectator'
+     * @param displayName The user name
+     */
     async joinChannel(channel: string, mode?: UserJoinMode, displayName?: string) {
         if (this.isConnected())
             throw new Error('Client is already connected');

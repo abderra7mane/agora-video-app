@@ -2,7 +2,11 @@
   "name": "agora-video-app",
   "description": "A video chat app built using Agora SDK",
   "version": "1.0.0",
-  "keywords": ["Agora SDK", "Video Chat", "Angular"],
+  "keywords": [
+    "Agora SDK",
+    "Video Chat",
+    "Angular"
+  ],
   "author": {
     "name": "Abderrahmane Mokrani",
     "email": "m.abderra7mane@gmail.com",
